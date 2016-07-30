@@ -1,0 +1,33 @@
+{
+  "tasks": [
+    {
+      "title": "Выучить английский!",
+      "status": "In the plan",
+      "textEditable": false,
+      "tasks": [
+        {"title": "Выучить времена", "isDone":true},
+        {"title": "Выучить времена", "isDone":false}
+      ]
+    },
+    {
+      "title": "Выучить Angular 2",
+      "status": "In the plan",
+      "textEditable": false,
+      "tasks": [
+        {"title": "Найти книгу ngBook 2", "isDone":true},
+        {"title": "Написать приложение", "isDone":false}
+      ]
+    },
+    {
+      "title": "Написать простой todo-list на Angular 2",
+      "status": "In progress",
+      "textEditable": false,
+      "tasks": [
+        {"title": "Реализовать добавление новой задачи", "isDone":true},
+        {"title": "Добавление подзадач", "isDone": true},
+        {"title": "Сохранение изминений", "isDone":false},
+        {"title": "Форма регистрации", "isDone":false}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+<div class="panel-body">
+    <ul class="list-group">
+        <li *ngFor="let task of tasks | searchFilter: status" [(ngClass)]="task.class" class="list-group-item" style="margin-top: 8px;">
+            <div class="textTitle">
+                <span class="{{task.priorityClass}}" (click)="task.togglePriority()" ></span>
+                <span class="glyphicon glyphicon-remove" style="cursor: pointer" data-toggle="modal" href="#confirmModal" (click)="taskService.changeUsingTask(task)" ></span>
+                <subtasks-list [task]="task"></subtasks-list>
+
+                <span [contentEditable]="task.textEditable">{{task.title}}</span>
+            </div>
+
+            <task-title [task]="task"></task-title>
+
+
+            <task-progressBar [task]="task"></task-progressBar>
+
+            <select-status [task]="task"></select-status>
+
+
+            <text-edit-btn [task]="task"></text-edit-btn>
+        </li>
+    </ul>
+</div>
+
+<div class="modal fade" id="subTaskModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Add new sub-task to your main task: {{taskService.usingTask.title}}</h4>
+            </div>
+            <div class="modal-body">
+                <ul>
+                    <li  *ngFor="let subtask of taskService.usingTask.tasks">
+                        <span>{{subtask.title}}</span>
+                        <span class="glyphicon glyphicon-remove" (click)="removeSubTask(subtask)"></span>
+                    </li>
+                </ul>
+                <p> <input type="text" class="form-control" #subTaskTitle placeholder="Input new sub-task.">&hellip;</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="taskService.addSubTask(taskService.usingTask, subTaskTitle.value)">Add sub-task</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

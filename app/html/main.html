@@ -1,0 +1,144 @@
+ <!-- Input form for new task  -->
+ <div class="panel body">
+    <form (submit) = "onSubmit()">
+        <div class="col-lg-6 input-group">
+                <input type="text" class="form-control" placeholder="Input new todo task." [(ngModel)] = "currentTask.title">
+                 <div class="input-group-btn">
+                   <select [(ngModel)]="status" class="form-control" style="width: 150px;">
+                     <option value="{{filter}}" *ngFor="let filter of filterService.filters">{{filter}}</option>
+                   </select>
+                 </div>
+        </div>
+    </form>
+ </div>
+<!-- End of input form -->
+
+ <tasks-list [status]="'All tasks'"  [tasks]="tasks"></tasks-list>
+
+<div class="panel-body">
+   <ul class="list-group">
+    <li *ngFor="let task of tasks | searchFilter: status" [(ngClass)]="task.class" class="list-group-item">
+        <div class="textTitle">
+            <span class="{{task.priorityClass}}" (click)="task.togglePriority()" ></span>
+            <span class="glyphicon glyphicon-remove" style="cursor: pointer" data-toggle="modal" href="#confirmModal" (click)="changeMainTask(task)" ></span>
+            <span class="glyphicon glyphicon-hand-right dropdown-toggle" data-toggle="dropdown"></span>
+            <ul class="dropdown-menu">
+                <li  *ngFor="let subtask of task.tasks" [ngStyle] = "{'pointer-events': task.subTaskStyle}">
+                    <a (click)="subTaskDone(task, subtask)">
+                        <span>{{subtask.title}}</span>
+                        <span [(ngClass)]="subtask.class"></span>
+                    </a>
+                <li class="divider"></li>
+                <li>
+                    <a data-toggle="modal" href="#myModal" (click)="changeMainTask(task)" >Add/Remove subtask <span class="glyphicon glyphicon-cog"></span></a>
+                </li>
+            </ul>
+            <span [contentEditable]="task.textEditable">{{task.title}}</span>
+        </div>
+
+
+
+        <div class="progressBar">
+            {{task.percentText}}
+            <div class="progress progress-striped">
+                <div class="progress-bar" [(ngClass)]="task.progressBarClass" role="progressbar" aria-valuenow="100" [ngStyle]="{'width': task.percent}" aria-valuemin="0" aria-valuemax="100" >
+                    <span class="sr-only"> {{task.percentText}}(success)</span>
+                </div>
+            </div>
+        </div>
+
+        <select  disabled="{{task.completed}}" [(ngModel)]="task.status" (change)="onChange($event.target.value, task)" class="listItemStatus">
+            <option value ="{{item}}" *ngFor="let item of statusService.statuses">{{item}}</option>
+        </select>
+
+
+        <button type="button" [(ngClass)]="task.editBtnClass" (click)="changeEditable(task, $event.target)">
+            <span class="glyphicon glyphicon-align-justify"></span>
+            {{task.editBtnText}}
+        </button>
+    </li>
+ </ul>
+</div>
+
+<div [(ngClass)]="Settings.messageClass" style="visibility: {{Settings.messageVisible}} ">
+    <strong>Warning!</strong> {{Settings.message}}
+</div>
+
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Add new sub-task to your main task: {{mainTask.title}}</h4>
+            </div>
+            <div class="modal-body">
+                <ul>
+                    <li  *ngFor="let subtask of mainTask.tasks">
+                            <span>{{subtask.title}}</span>
+                            <span class="glyphicon glyphicon-remove" (click)="removeSubTask(subtask)"></span>
+                    </li>
+                </ul>
+                <p> <input type="text" class="form-control" [(ngModel)]="subTaskTitle" placeholder="Input new sub-task.">&hellip;</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="taskService.addSubTask(this.mainTask, this.subTaskTitle)">Add sub-task</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<button type="button" data-toggle="modal" data-target="#jsonModal" >Запустить модаль</button>
+
+<div class="modal fade" id="confirmModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Are you sure , that you want to remove {{mainTask.title}}</h4>
+            </div>
+            <div class="modal-body">
+                <span>Subtasks: </span>
+                <ul>
+                    <li  *ngFor="let subtask of mainTask.tasks">
+                        <span>{{subtask.title}}</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="removeTask(mainTask)">Remove</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="jsonModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Are you sure , that you want to remove </h4>
+            </div>
+            <div class="modal-body">
+                <span>Subtasks: </span>
+                <ul>
+                    <li  *ngFor="let task of tasks">
+                        <span>{{task.title}}</span>
+                        <span>
+                    <ul><li  *ngFor="let subtask of task.tasks">
+                            <span>{{subtask.title}}</span>
+                    </li></ul>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="removeTask(mainTask)">Remove</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- Trigger the Modal -->

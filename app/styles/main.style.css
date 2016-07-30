@@ -1,0 +1,12 @@
+#container{
+    position: absolute;
+    width: 50%;
+    margin-top: 10%;
+    margin-left: 25%;
+    box-shadow: #9acfea 10px 10px 20px;
+}
+.list-group-item{
+    width: 95%;
+    margin-left: 30px;
+}
+.rightSelect{width: 20%;}

@@ -1,0 +1,12 @@
+<span class="glyphicon glyphicon-hand-right dropdown-toggle" data-toggle="dropdown"></span>
+<ul class="dropdown-menu">
+ <li  *ngFor="let subtask of task.tasks" [ngStyle] = "{'pointer-events': task.subTaskStyle}">
+    <a (click)="taskService.subTaskDone(task, subtask)">
+        <span>{{subtask.title}}</span>
+        <span [(ngClass)]="subtask.class"></span>
+    </a>
+ <li class="divider"></li>
+ <li>
+    <a data-toggle="modal" href="#subTaskModal" (click)="taskService.changeUsingTask(task)" >Add/Remove subtask <span class="glyphicon glyphicon-cog"></span></a>
+ </li>
+</ul>

@@ -1,0 +1,7 @@
+<div class="textTitle">
+    <span class="{{task.priorityClass}}" (click)="task.togglePriority()" ></span>
+    <span class="glyphicon glyphicon-remove" style="cursor: pointer" data-toggle="modal" href="#confirmModal" (click)="taskService.changeUsingTask(task)" ></span>
+    <subtasks-list [task]="task"></subtasks-list>
+
+    <span [contentEditable]="task.textEditable">{{task.title}}</span>
+</div>

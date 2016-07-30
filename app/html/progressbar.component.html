@@ -1,0 +1,8 @@
+<div class="progressBar">
+    {{task.percentText}}
+    <div class="progress progress-striped">
+        <div class="progress-bar" [(ngClass)]="task.progressBarClass" role="progressbar" aria-valuenow="100" [ngStyle]="{'width': task.percent}" aria-valuemin="0" aria-valuemax="100" >
+            <span class="sr-only"> {{task.percentText}}(success)</span>
+        </div>
+    </div>
+</div>

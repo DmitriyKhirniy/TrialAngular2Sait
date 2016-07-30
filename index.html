@@ -1,0 +1,64 @@
+<html>
+<head>
+    <title>Angular 2 QuickStart</title>
+    <base href="/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 1. Load libraries -->
+    <!-- Polyfill(s) for older browsers -->
+    <script src="node_modules/core-js/client/shim.min.js"></script>
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    <script src="node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+    <!-- 2. Configure SystemJS -->
+    <script src="systemjs.config.js"></script>
+    <script>
+        System.import('app').catch(function(err){ console.error(err); });
+    </script>
+
+    <!-- 3. Bootstrap-->
+    <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+
+
+    <style>
+        .editTextButton{
+            margin-top:  -25px;
+            margin-left: 92%;
+        }
+        .listItemStatus
+        {
+            position: absolute;
+            width: 12%;
+            margin-left: 76%;
+            border: 2px gainsboro solid;
+            border-radius: 5px;
+            height: 32px;
+            margin-top: -25px;
+        }
+        .textTitle{
+            position: static;
+            font-size: 20px;
+            width: 400px;
+        }
+        .progressBar{
+            position: absolute;
+            width: 200px;
+            margin-left: 53%;
+            margin-top: -35px;
+        }
+        .dropdown-toggle{
+            cursor: pointer;
+        }
+    </style>
+</head>
+<!-- 3. Display the application -->
+<body>
+<app>Loading...</app>
+</body>
+</html>
